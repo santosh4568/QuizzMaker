@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Maker - Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js" defer></script>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">Quiz Maker</a>
+        <ul th:if='${user}' class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Create Quiz</a></li>
+            <li><a href="#">Take Quiz</a></li>
+            <li><a href="/profile" th:text="${user}"></a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+        <ul class="nav-links" th:if='${user} == null' >
+            <li><a href="#">Home</a></li>
+            <li><a href="/login">Create Quiz</a></li>
+            <li><a href="/login">Take Quiz</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<header class="header">
+    <div class="container">
+        <h1>Welcome to Quiz Maker</h1>
+        <p>Create, Share, and Play Quizzes with Ease</p>
+        <a href="#" class="cta-button">Get Started</a>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<main class="main-content">
+    <div class="container">
+        <section class="features">
+            <h2>Why Choose Quiz Maker?</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>Create Quizzes</h3>
+                    <p>Easily create engaging quizzes and share them with your audience.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Take Quizzes</h3>
+                    <p>Enjoy an interactive experience while testing your knowledge.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Track Results</h3>
+                    <p>Get instant feedback and analytics after completing a quiz.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

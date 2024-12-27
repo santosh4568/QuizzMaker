@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Quiz Maker</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+  .error-message p
+  {
+    color: red;
+
+  }
+</style>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="logo">Quiz Maker</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="#" class="active">Signup</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Signup Section -->
+<section class="signup-section">
+  <div class="container">
+    <h1>Signup</h1>
+    <p>Create your account as a Quiz Taker or Conductor</p>
+
+    <!-- Role Toggle -->
+    <div class="role-toggle">
+      <label>
+        <input type="radio" name="role" value="USER" onclick="toggleForm('USER')" checked>
+        I'm a Quiz Taker
+      </label>
+      <label>
+        <input type="radio" name="role" value="CONDUCTOR" onclick="toggleForm('CONDUCTOR')">
+        I'm a Quiz Conductor
+      </label>
+    </div>
+
+    <div class="error-message">
+      <p th:if="${usernameExists}" th:text="${usernameExists}"></p>
+    </div>
+    <!-- Signup Form -->
+    <form action="/signup" method="post" id="signup-form" class="signup-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" required>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <input type="hidden" id="frole" name="frole">
+      <button type="submit" class="submit-button" onclick="checkRole()">Signup</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2024 Quiz Maker. All Rights Reserved.</p>
+  </div>
+</footer>
+</body>
+<script>
+  function toggleForm(role) {
+    //const additionalFields = document.getElementById('additional-fields');
+    const roleInput = document.getElementById('frole');
+    roleInput.value = role;
+  }
+
+  function checkRole(){
+    const role = document.getElementById('frole');
+    if(role.value != 'CONDUCTOR'){
+      role.value = 'USER';
+    }
+  }
+</script>
+</html>
