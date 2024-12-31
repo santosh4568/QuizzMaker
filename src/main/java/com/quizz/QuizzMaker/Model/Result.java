@@ -8,52 +8,51 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int totalMarks;
-    private int obtainedMarks;
-    private boolean passed;
+    private String quizztitle;
+    private String username;
+    private int totalmarks;
+    private int obtainedmarks;
+    private String resultstatus;
 
-    @Column(columnDefinition = "TEXT")
-    private String answerDetails;
 
     // Getters and Setters
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
-    public int getTotalMarks() {
-        return totalMarks;
+    public String getQuizztitle() {
+        return quizztitle;
+    }
+    public void setQuizztitle(String quizztitle) {
+        this.quizztitle = quizztitle;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public int getTotalmarks() {
+        return totalmarks;
+    }
+    public void setTotalmarks(int totalmarks) {
+        this.totalmarks = totalmarks;
+    }
+    public int getObtainedmarks() {
+        return obtainedmarks;
+    }
+    public void setObtainedmarks(int obtainedmarks) {
+        this.obtainedmarks = obtainedmarks;
+    }
+    public String getResultstatus() {
+        return resultstatus;
+    }
+    public void setResultstatus(String resultstatus) {
+        this.resultstatus = resultstatus;
     }
 
-    public void setTotalMarks(int totalMarks) {
-        this.totalMarks = totalMarks;
-    }
 
-    public int getObtainedMarks() {
-        return obtainedMarks;
-    }
-
-    public void setObtainedMarks(int obtainedMarks) {
-        this.obtainedMarks = obtainedMarks;
-    }
-
-    public boolean isPassed() {
-        return passed;
-    }
-
-    public void setPassed(boolean passed) {
-        this.passed = passed;
-    }
-
-    public String getAnswerDetails() {
-        return answerDetails;
-    }
-
-    public void setAnswerDetails(String answerDetails) {
-        this.answerDetails = answerDetails;
-    }
 }
 

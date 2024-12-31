@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Previous Quizz</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+  table{
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin-left: 30%;
+    margin-top: 20px;
+  }
+    tr,td{
+        border: 2px solid black;
+
+    }
+    select{
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    form{
+        margin-left: 5%;
+    }
+    h3 {
+      margin-left: 30%;
+    }
+    h1{
+      text-align: center;
+    }
+</style>
+<body>
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="logo">Quiz Maker</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/profile" th:text="${user}"></a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<h1>Previous Quizz</h1>
+<form action="/prevQuizz" method="post" name="myform">
+  <select name="quizz" onchange="myform.submit()">
+    <option value="">-- Select Quizz --</option>
+    <option th:each="title : ${TitleList}" th:text="${title}" th:value="${title}"></option>
+  </select>
+</form>
+<h3>------------------------------- Questions ---------------------------------------</h3>
+<table>
+  <tr>
+    <td><b>Question</b></td>
+    <td><b>Option A</b></td>
+    <td><b>Option B</b></td>
+    <td><b>Option C</b></td>
+    <td><b>Option D</b></td>
+    <td><b>Answer</b></td>
+  </tr>
+  <tr th:each="questions : ${previousQuestionList}">
+    <td th:text="${questions.getQuestion_desc()}"></td>
+    <td th:text="${questions.getOption1()}"></td>
+    <td th:text="${questions.getOption2()}"></td>
+    <td th:text="${questions.getOption3()}"></td>
+    <td th:text="${questions.getOption4()}"></td>
+    <td th:text="${questions.getCorrect_option()}"></td>
+  </tr>
+</table>
+</body>
+</html>

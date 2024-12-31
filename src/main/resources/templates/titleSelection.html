@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Quiz Title</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+    .error-message {
+        color: red;
+        text-align: center;
+    }
+</style>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">Quiz Maker</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile" th:text="${user}"></a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Quiz Title Selection Section -->
+<section class="title-selection-section">
+    <div class="container">
+        <h1>Add Quiz Title</h1>
+        <form action="/addQuestions" method="post" class="title-form">
+            <div class="form-group">
+                <label for="quizTitle">Quiz Title</label>
+                <input type="text" id="quizTitle" name="quizTitle" placeholder="Enter your quiz title" required>
+            </div>
+            <button type="submit" class="submit-button">Next</button>
+        </form>
+        <div class="error-message">
+            <p th:if="${titleExists}" th:text="${titleExists}"></p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+<script>
+    // Display alert message if quiz title is empty
+    const urlParams = new URLSearchParams(window.location.search);
+    const titleEmpty = urlParams.get('titleEmpty');
+    if (titleEmpty) {
+        alert("Quiz title cannot be empty!");
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("Title selection page loaded");
+    });
+
+</script>
+</html>

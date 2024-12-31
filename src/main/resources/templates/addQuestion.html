@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<style>
+    table{
+        border: 2px solid black;
+        border-collapse: collapse;
+        margin-left: 30%;
+        margin-top: 20px;
+    }
+    tr,td{
+        border: 2px solid black;
+
+    }
+    select{
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">Quiz Maker</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile" th:text="${user}"></a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- Add Questions Section -->
+<section class="add-questions-section">
+    <div class="container">
+        <h1>Add Questions</h1>
+        <form action="/saveQuestions" method="post" id="questions-form" class="questions-form">
+            <div id="questions-container">
+                <div class="question-group" id="questionDiv">
+                    <h3 th:text="${questionCount}"></h3>
+                    <div class="form-group">
+                        <label for="Question">Question</label>
+                        <input type="text" id="Question" name="questions" placeholder="Enter question" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="option1">Option 1</label>
+                        <input type="text" id="option1" name="A" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="option2">Option 2</label>
+                        <input type="text" id="option2" name="B" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="option3">Option 3</label>
+                        <input type="text" id="option3" name="C" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="option4">Option 4</label>
+                        <input type="text" id="option4" name="D" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correct">Correct Option</label>
+                        <select id="correct" name="Correct" required>
+                            <option value="A">Option 1</option>
+                            <option value="B">Option 2</option>
+                            <option value="C">Option 3</option>
+                            <option value="D">Option 4</option>
+                        </select>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <button type="submit" class="add-question-button">Save & Next</button>
+        </form>
+        <form action="/quizzSaved" method="post">
+            <button type="submit" class="submit-button">Save Quizz</button>
+        </form>
+        <h3>------------------------ Question Saved -----------------------------</h3>
+        <table style="border: 2px solid black;">
+            <tr style="border: 2px solid black;">
+<!--                <td>S. No.</td>-->
+                <td><b>Question</b></td>
+                <td><b>Option A</b></td>
+                <td><b>Option B</b></td>
+                <td><b>Option C</b></td>
+                <td><b>Option D</b></td>
+                <td><b>Correct Option</b></td>
+            </tr>
+            <tr th:each="questions : ${previousQuestionList}" style="border: 2px solid black;">
+                <td th:text="${questions.getQuestion_desc()}"></td>
+                <td th:text="${questions.getOption1()}"></td>
+                <td th:text="${questions.getOption2()}"></td>
+                <td th:text="${questions.getOption3()}"></td>
+                <td th:text="${questions.getOption4()}"></td>
+                <td th:text="${questions.getCorrect_option()}"></td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

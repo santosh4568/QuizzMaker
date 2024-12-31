@@ -14,8 +14,9 @@
         <a href="#" class="logo">Quiz Maker</a>
         <ul th:if='${user}' class="nav-links">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Create Quiz</a></li>
-            <li><a href="#">Take Quiz</a></li>
+            <li th:if="${Role} == 'CONDUCTOR'"><a href="/createQuizz">Create Quiz</a></li>
+            <li th:if="${Role} == 'CONDUCTOR'"><a href="/viewQuizz">View Quiz</a></li>
+            <li th:if="${Role} == 'USER'"><a href="/selectTitle">Take Quiz</a></li>
             <li><a href="/profile" th:text="${user}"></a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
@@ -34,7 +35,9 @@
     <div class="container">
         <h1>Welcome to Quiz Maker</h1>
         <p>Create, Share, and Play Quizzes with Ease</p>
-        <a href="#" class="cta-button">Get Started</a>
+        <a th:if='${user} == null' href="/login" class="cta-button">Get Started</a>
+        <a th:if="${Role} == 'USER'"  href="/selectTitle" class="cta-button">Get Started</a>
+        <a th:if="${Role} == 'CONDUCTOR'" href="/createQuizz" class="cta-button">Get Started</a>
     </div>
 </header>
 
