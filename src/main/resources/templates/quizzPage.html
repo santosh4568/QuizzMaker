@@ -1,10 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz</title>
+<!--    <link rel="stylesheet" href="/css/style.css">-->
 </head>
+<style>
+
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar {
+        background: linear-gradient(90deg, #003366, #00509e);
+        color: #fff;
+        padding: 15px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar .logo {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links li {
+        display: inline;
+    }
+
+    .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 15px;
+        transition: background 0.3s;
+        border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+        background: #0077c8;
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+        padding: 60px 0;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    .quiz-section h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #003366;
+    }
+
+    .quiz-form {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .question-group h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1em;
+        color: #555;
+    }
+
+    .submit-button {
+        background-color: #003366;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .submit-button:hover {
+        background-color: #00509e;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #f0f0f0;
+        margin: 20px 0;
+    }
+    /* Footer */
+    .footer {
+        background-color: #003366;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .footer p {
+        font-size: 1em;
+        margin: 0;
+    }
+</style>
 <body>
-<h1>This is quizz page.</h1>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="logo">Quiz Maker</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile" th:text="${user}"></a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Quiz Section -->
+<section class="quiz-section">
+    <div class="container">
+        <h1>Take the Quiz</h1>
+        <form action="/submitQuiz" method="post" class="quiz-form">
+            <div id="quiz-container">
+                <!-- Questions with options will be dynamically populated -->
+                <div th:if="${question} != null">
+                    <div class="question-group">
+                        <h3 th:text="${question.getQuestion_desc()}"></h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="option" value="A">
+                                <span th:text="${question.getOption1()}"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="option" value="B">
+                                <span th:text="${question.getOption2()}"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="option" value="C">
+                                <span th:text="${question.getOption3()}"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="option" value="D">
+                                <span th:text="${question.getOption4()}"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <button th:if="${lastQuestion} == true" type="submit" class="submit-button">Submit Quiz</button>
+            <button th:if="${lastQuestion} == false" type="submit" class="submit-button">Save & Next</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2024 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

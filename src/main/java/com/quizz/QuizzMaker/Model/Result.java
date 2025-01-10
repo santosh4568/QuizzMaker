@@ -13,6 +13,7 @@ public class Result {
     private int totalmarks;
     private int obtainedmarks;
     private String resultstatus;
+    private String markedanswers;
 
 
     // Getters and Setters
@@ -51,6 +52,12 @@ public class Result {
     }
     public void setResultstatus(String resultstatus) {
         this.resultstatus = resultstatus;
+    }
+    public String getMarkedanswers() {
+        return markedanswers;
+    }
+    public void setMarkedanswers(String markedanswers) {
+        this.markedanswers = markedanswers;
     }
 
 

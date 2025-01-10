@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #003366, #00509e);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: #0077c8;
+        }
+
+        /* Main Section */
+        .thankyou-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .thankyou-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .thankyou-container h1 {
+            font-size: 2.5em;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        .thankyou-container form {
+            margin-top: 20px;
+        }
+
+        .thankyou-container button {
+            background-color: #003366;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .thankyou-container button:hover {
+            background-color: #00509e;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 1em;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="#" class="logo">Quiz Maker</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile" th:text="${user}"></a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Section -->
+<section class="thankyou-section">
+    <div class="thankyou-container">
+        <h1>Thank You for Taking the Quiz!</h1>
+        <form method="post" action="/Result">
+            <button type="submit">View Result</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2025 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,8 +1,10 @@
 package com.quizz.QuizzMaker.Controller;
 
 import com.quizz.QuizzMaker.Model.Question;
+import com.quizz.QuizzMaker.Model.Result;
 import com.quizz.QuizzMaker.Model.User;
 import com.quizz.QuizzMaker.Service.QuestionService;
+import com.quizz.QuizzMaker.Service.ResultService;
 import com.quizz.QuizzMaker.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,29 +13,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class MyController {
 
     @Autowired
     private UserService userService;
+    
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private ResultService resultService;
 
     private String user_name = null;
     private String UserName = null;
     private String activeTitle = null;
     private String activeRole = null;
     private int questionCount = 1;
+    private int noOfQuestions = 0;
+    private int currentQuestion = 0;
+    private String answerMarked = "";
 
     @GetMapping("/")
     public ModelAndView loadHome(){
         ModelAndView mv = new ModelAndView();
         mv.addObject("Role" , activeRole);
         mv.addObject("user" , user_name);
+        answerMarked = "";
         mv.setViewName("Home");
         return mv;
     }
@@ -126,7 +134,7 @@ public class MyController {
     @PostMapping("/addQuestions")
     public ModelAndView TitlePageNext(@RequestParam("quizTitle") String title){
         ModelAndView mv = new ModelAndView();
-        String titleExists = questionService.getQuestionsByQuizzTitle(title).size() > 0 ? "Title already exists" : "";
+        String titleExists = !questionService.getQuestionsByQuizzTitle(title).isEmpty() ? "Title already exists" : "";
         if(titleExists.equals("Title already exists")){
             mv.addObject("user",user_name);
             mv.addObject("titleExists" , titleExists);
@@ -226,6 +234,7 @@ public class MyController {
         mv.addObject("TitleList",titleSet);
         mv.addObject("Role" , activeRole);
         mv.addObject("user",user_name);
+        answerMarked = "";
         mv.setViewName("titleSelectionUser");
         return mv;
     }
@@ -233,9 +242,101 @@ public class MyController {
     @PostMapping("/takeQuizz")
     public ModelAndView loadQuizzPage(@RequestParam("quizz") String title){
         ModelAndView mv = new ModelAndView();
+        List<Question> qsList = questionService.getQuestionsByQuizzTitle(title);
+        activeTitle = title;
+        currentQuestion = 0;
+        noOfQuestions = qsList.size();
+        mv.addObject("question",qsList.get(currentQuestion));
+        currentQuestion++;
         mv.addObject("Role" , activeRole);
         mv.addObject("user",user_name);
+        if(currentQuestion == noOfQuestions){
+            mv.addObject("lastQuestion",true);
+        }
+        else{
+            mv.addObject("lastQuestion",false);
+        }
+        //answerMarked += qsList.get(currentQuestion).getId()+":"+answer;
         mv.setViewName("quizzPage");
+        return mv;
+    }
+
+
+    @PostMapping("/submitQuiz")
+    public ModelAndView quizzPageNext(@RequestParam("option") String answer){
+        ModelAndView mv = new ModelAndView();
+        List<Question> qsList = questionService.getQuestionsByQuizzTitle(activeTitle);
+        if(currentQuestion < noOfQuestions){mv.addObject("question",qsList.get(currentQuestion));}
+        mv.addObject("Role" , activeRole);
+        mv.addObject("user",user_name);
+        if(currentQuestion == noOfQuestions){
+            mv.addObject("Role" , activeRole);
+            mv.addObject("user",user_name);
+            answerMarked += qsList.get(currentQuestion-1).getId()+":"+answer;
+            Result result = new Result();
+            result.setMarkedanswers(answerMarked);
+            result.setQuizztitle(activeTitle);
+            result.setTotalmarks(noOfQuestions);
+            result.setUsername(UserName);
+
+            resultService.saveResult(result);
+
+            mv.setViewName("preresult");
+            return mv;
+        }
+        else{
+            if(currentQuestion == noOfQuestions - 1){
+                mv.addObject("lastQuestion",true);
+            }
+            else {
+                mv.addObject("lastQuestion", false);
+            }
+            mv.setViewName("quizzPage");
+        }
+        answerMarked += qsList.get(currentQuestion-1).getId()+":"+answer+"#";
+        currentQuestion++;
+        return mv;
+    }
+
+    @PostMapping("/Result")
+    public ModelAndView loadResult(){
+        ModelAndView mv = new ModelAndView();
+        Map<Long, String> markedAnswersMap = new HashMap<>();
+        Result result = resultService.getResultByTitleAndUsername(activeTitle,UserName);
+        List<Question> qsList = questionService.getQuestionsByQuizzTitle(result.getQuizztitle());
+        int marksObtained = 0;
+        String[] markedAnswers = result.getMarkedanswers().split("#");
+
+        for (String s : markedAnswers) {
+            String[] temp = s.split(":");
+            markedAnswersMap.put(Long.parseLong(temp[0]), temp[1]);
+        }
+
+        for(String s : markedAnswers){
+            String[] temp = s.split(":");
+            for(Question q : qsList){
+                if(q.getId() == Long.parseLong(temp[0])){
+                    if(q.getCorrect_option().equals(temp[1])){
+                        marksObtained++;
+                    }
+                }
+            }
+        }
+        double percentage = marksObtained / (double)qsList.size() * 100;
+        if(percentage >= 50){
+            result.setResultstatus("Pass");
+        }
+        else{
+            result.setResultstatus("Fail");
+        }
+        result.setObtainedmarks(marksObtained);
+        resultService.updateResult(marksObtained,result.getResultstatus(),result.getId());
+        mv.addObject("Role" , activeRole);
+        mv.addObject("user",user_name);
+        mv.addObject("result",result);
+        mv.addObject("question" ,qsList);
+        mv.addObject("markedAnswersMap", markedAnswersMap);
+        mv.setViewName("showResult");
         return mv;
     }
 
@@ -244,6 +345,10 @@ public class MyController {
     public ModelAndView Logout(){
         user_name = null;
         activeRole = null;
+        noOfQuestions = 0;
+        currentQuestion = 0;
+        questionCount = 1;
+        answerMarked = "";
         ModelAndView mv = new ModelAndView();
         mv.setViewName("Home");
         return mv;

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #003366, #00509e);
+            color: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            transition: background 0.3s;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: #0077c8;
+        }
+
+        /* Main Section */
+        .container {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            /*background-color: #f9f9f9;*/
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #003366;
+            text-align: center;
+        }
+
+        .result-summary {
+            margin-bottom: 30px;
+        }
+
+        .result-summary p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .result-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .result-details th,
+        .result-details td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .result-details th {
+            background-color: #003366;
+            color: #fff;
+        }
+
+        .status-pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 1em;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="logo">Quiz Maker</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/profile}" th:text="${user}"></a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container">
+    <h1>Quiz Result</h1>
+
+    <!-- Result Summary Section -->
+    <section class="result-summary">
+        <p><strong>Quiz Title:</strong> <span th:text="${result.quizztitle}"></span></p>
+        <p><strong>Total Questions:</strong> <span th:text="${question.size()}"></span></p>
+        <p><strong>Marks Obtained:</strong> <span th:text="${result.obtainedmarks}"></span></p>
+<!--        <p><strong>Percentage:</strong>-->
+<!--            <span th:text="${#numbers.formatDecimal((result.obtainedmarks / question.size()) * 100, 1, 2)} + '%'"></span>-->
+<!--        </p>-->
+        <p><strong>Status:</strong>
+            <span th:class="${result.resultstatus == 'Pass' ? 'status-pass' : 'status-fail'}"
+                  th:text="${result.resultstatus}"></span>
+        </p>
+    </section>
+
+    <!-- Detailed Question Results Section -->
+    <section class="result-details">
+        <h2>Question Details</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Correct Answer</th>
+                <th>Your Answer</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="q : ${question}">
+                <td th:text="${q.id}"></td>
+                <td th:text="${q.question_desc}"></td>
+                <td th:if="${q.correct_option == 'A'}" th:text="${q.option1}"></td>
+                <td th:if="${q.correct_option == 'B'}" th:text="${q.option2}"></td>
+                <td th:if="${q.correct_option == 'C'}" th:text="${q.option3}"></td>
+                <td th:if="${q.correct_option == 'D'}" th:text="${q.option4}"></td>
+                <td th:if="${markedAnswersMap[q.id] == 'A'}" th:text="${q.option1}"></td>
+                <td th:if="${markedAnswersMap[q.id] == 'B'}" th:text="${q.option2}"></td>
+                <td th:if="${markedAnswersMap[q.id] == 'C'}" th:text="${q.option3}"></td>
+                <td th:if="${markedAnswersMap[q.id] == 'D'}" th:text="${q.option4}"></td>
+                <td>
+                    <span th:if="${q.correct_option == markedAnswersMap[q.id]}">✅</span>
+                    <span th:if="${q.correct_option != markedAnswersMap[q.id]}">❌</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>© 2025 Quiz Maker. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
