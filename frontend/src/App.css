@@ -1,0 +1,358 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #003366, #00509e);
+  color: #fff;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  transition: background 0.3s;
+  border-radius: 5px;
+}
+
+.nav-links a:hover {
+  background: #0077c8;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(to right, #ff6600, #ff9900);
+  color: #fff;
+  text-align: center;
+  padding: 120px 0;
+}
+
+.header h1 {
+  font-size: 3.5em;
+  margin-bottom: 15px;
+}
+
+.header p {
+  font-size: 1.2em;
+  margin-bottom: 25px;
+}
+
+.header .cta-button {
+  background-color: #003366;
+  color: #fff;
+  padding: 12px 25px;
+  text-decoration: none;
+  font-size: 1.1em;
+  border-radius: 25px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.header .cta-button:hover {
+  background-color: #00509e;
+  transform: scale(1.1);
+}
+
+/* Main Content */
+.main-content {
+  padding: 60px 0;
+  background-color: #f0f4f8;
+}
+
+.features {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.features h2 {
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.feature-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 320px;
+  text-align: center;
+}
+.feature-item:hover{
+
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-item h3 {
+  margin-bottom: 15px;
+  font-size: 1.6em;
+  color: #00509e;
+}
+
+.feature-item p {
+  font-size: 1em;
+  color: #555;
+}
+
+/* Footer */
+.footer {
+  background-color: #003366;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.footer p {
+  font-size: 1em;
+  margin: 0;
+}
+
+
+
+/* Signup Section */
+.signup-section {
+  padding: 60px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.signup-section h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+.signup-section p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.role-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.role-toggle label {
+  font-size: 1.1em;
+  color: #333;
+  cursor: pointer;
+}
+
+.role-toggle input[type="radio"] {
+  margin-right: 5px;
+}
+
+.signup-form {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1em;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.additional-fields {
+  display: none; /* Initially hidden */
+}
+
+.submit-button {
+  background-color: #003366;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #00509e;
+}
+
+
+/* Login Section */
+.login-section {
+  padding: 60px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.login-section h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+.login-section p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.role-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.role-toggle label {
+  font-size: 1.1em;
+  color: #333;
+  cursor: pointer;
+}
+
+.role-toggle input[type="radio"] {
+  margin-right: 5px;
+}
+
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1em;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.submit-button {
+  background-color: #003366;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #00509e;
+}
+
+/* Title Selection Section */
+.title-selection-section, .add-questions-section {
+  padding: 60px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.title-selection-section h1, .add-questions-section h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.title-form, .questions-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.questions-form #questions-container {
+  margin-bottom: 20px;
+}
+
+.question-group {
+  margin-bottom: 20px;
+}
+
+.add-question-button {
+  background-color: #0077c8;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-question-button:hover {
+  background-color: #00509e;
+}
+
+
+
